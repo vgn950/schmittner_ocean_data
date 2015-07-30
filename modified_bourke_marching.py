@@ -73,12 +73,11 @@ endfacet""" % (self.p1, self.p2, self.p3)
 # %s""" %(self.p1,self.p2,self.p3)
 
 def main():
-    import os
     import sys
-
+    #vID = 0
     ID = 1
     triangles = []
-    isolevel = float(sys.argv[1])
+    isolevel = 27.6 #float(sys.argv[1])
     # vert = [None]*190001
     sID = [None] * 190001
     for line in open("mb_sphere_sig_all.xyz"):  # MESH AND ATTR FILE
@@ -116,70 +115,70 @@ def t000F(iso, f0, f1, f2, f3):
 
 def t0E01(iso, f0, f1, f2, f3):
     return [Triangle(
-        VertexInterp(iso, f0.p, f1.p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
-        VertexInterp(iso, f0.p, f2.p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
-        VertexInterp(iso, f0.p, f3.p, f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a))
+        VertexInterp(iso, f0, f1), # .p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
+        VertexInterp(iso, f0, f2), #.p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
+        VertexInterp(iso, f0, f3)) #.p, f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a))
     ]
 
 
 def t0D02(iso, f0, f1, f2, f3):
     return [Triangle(
-        VertexInterp(iso, f1.p, f0.p, f1.a1, f0.a1, f1.v, f0.v, f1.a, f0.a),
-        VertexInterp(iso, f1.p, f3.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a),
-        VertexInterp(iso, f1.p, f2.p, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a))
+        VertexInterp(iso, f1, f0), #.p, f1.a1, f0.a1, f1.v, f0.v, f1.a, f0.a),
+        VertexInterp(iso, f1, f3), #.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a),
+        VertexInterp(iso, f1, f2)) #.p, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a))
     ]
 
 
 def t0C03(iso, f0, f1, f2, f3):
     tri = Triangle(
-        VertexInterp(iso, f0.p, f3.p, f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a),
-        VertexInterp(iso, f0.p, f2.p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
-        VertexInterp(iso, f1.p, f3.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a))
+        VertexInterp(iso, f0, f3), #.p, f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a),
+        VertexInterp(iso, f0, f2), # .p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
+        VertexInterp(iso, f1, f3)) #.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a))
     return [tri, Triangle(
         tri.p[2],
-        VertexInterp(iso, f1.p, f2.p, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a),
+        VertexInterp(iso, f1, f2), #.p, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a),
         tri.p[1])
             ]
 
 
 def t0B04(iso, f0, f1, f2, f3):
     return [Triangle(
-        VertexInterp(iso, f2.p, f0.p, f2.a1, f0.a1, f2.v, f0.v, f0.a, f2.a),
-        VertexInterp(iso, f2.p, f1.p, f2.a1, f1.a1, f2.v, f1.v, f2.a, f1.a),
-        VertexInterp(iso, f2.p, f3.p, f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a))
+        VertexInterp(iso, f2, f0), #.p, f2.a1, f0.a1, f2.v, f0.v, f0.a, f2.a),
+        VertexInterp(iso, f2, f1), #f2.a1, f1.a1, f2.v, f1.v, f2.a, f1.a),
+        VertexInterp(iso, f2, f3)) # f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a))
     ]
 
 
 def t0A05(iso, f0, f1, f2, f3):
     tri = Triangle(
-        VertexInterp(iso, f0.p, f1.p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
-        VertexInterp(iso, f2.p, f3.p, f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a),
-        VertexInterp(iso, f0.p, f3.p, f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a))
+        VertexInterp(iso, f0, f1), #.p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
+        VertexInterp(iso, f2, f3), # f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a),
+        VertexInterp(iso, f0, f3)) # f0.a1, f3.a1, f0.v, f3.v, f0.a, f3.a))
     return [tri, Triangle(
         tri.p[0],
-        VertexInterp(iso, f1.p, f2.p, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a),
+        VertexInterp(iso, f1, f2), #, f1.a1, f2.a1, f1.v, f2.v, f1.a, f2.a),
         tri.p[1])
             ]
 
 
 def t0906(iso, f0, f1, f2, f3):
     tri = Triangle(
-        VertexInterp(iso, f0.p, f1.p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
-        VertexInterp(iso, f1.p, f3.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a),
-        VertexInterp(iso, f2.p, f3.p, f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a))
+        VertexInterp(iso, f0, f1), #.p, f0.a1, f1.a1, f0.v, f1.v, f0.a, f1.a),
+        VertexInterp(iso, f1, f3), #.p, f1.a1, f3.a1, f1.v, f3.v, f1.a, f3.a),
+        VertexInterp(iso, f2, f3)) #.p, f2.a1, f3.a1, f2.v, f3.v, f2.a, f3.a))
     return [tri,
             Triangle(
                 tri.p[0],
-                VertexInterp(iso, f0.p, f2.p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
+                VertexInterp(iso, f0, f2), #.p, f0.a1, f2.a1, f0.v, f2.v, f0.a, f2.a),
                 tri.p[2])
             ]
 
 
 def t0708(iso, f0, f1, f2, f3):
     return [Triangle(
-        VertexInterp(iso, f3.p, f0.p, f3.a1, f0.a1, f3.v, f0.v, f3.a, f0.a),
-        VertexInterp(iso, f3.p, f2.p, f3.a1, f2.a1, f3.v, f2.v, f3.a, f2.a),
-        VertexInterp(iso, f3.p, f1.p, f3.a1, f1.a1, f3.v, f1.v, f3.a, f1.a))
+        VertexInterp(iso, f3, f0), #.p, f3.a1, f0.a1, f3.v, f0.v, f3.a, f0.a),
+        VertexInterp(iso, f3, f2), #.p, f3.a1, f2.a1, f3.v, f2.v, f3.a, f2.a),
+        VertexInterp(iso, f3, f1)) #.p, f3.a1, f1.a1, f3.v, f1.v, f3.a, f1.a))
     ]
 
 
@@ -189,7 +188,6 @@ trianglefs = {7: t0708, 8: t0708, 9: t0906, 6: t0906, 10: t0A05, 5: t0A05, 11: t
 
 
 def PolygoniseTri(iso, f0, f1, f2, f3):  # VN:Pass values at each vertex instead?
-    # print iso
     triangles = []
 
     #   Determine which of the 16 cases we have given which vertices
@@ -211,17 +209,27 @@ def PolygoniseTri(iso, f0, f1, f2, f3):  # VN:Pass values at each vertex instead
 # VN:Find new point, interpolate velocity components and additional attributes
 from math import sqrt
 
-def VertexInterp(isolevel, vert1, vert2, val1, val2, vel1, vel2, attr1, attr2):
+
+def VertexInterp(isolevel, f1, f2): # val1, val2, vel1, vel2, attr1, attr2):
+    #vID = vID + 1
     tolerance = 0.00001
+    vert1 = f1.p
+    vert2 = f2.p
+    vel1 = f1.v
+    vel2 = f2.v
+    attr1 = f1.a
+    attr2 = f2.a
+    val1 = f1.a1
+    val2 = f2.a1
     if abs(isolevel - val1) < tolerance:
-        # print vert1,vel1
-        return vert1, vel1, attr1;
+        #vert1.ID = vID
+        return vert1, vel1, attr1
     if abs(isolevel - val2) < tolerance:
-        # print vert2,vel2
-        return vert2, vel2, attr2;
+        #vert2.ID = vID
+        return vert2, vel2, attr2
     if abs(val1 - val2) < tolerance:
-        # print vert1,vel1
-        return vert1, vel1, attr1;
+        #vert1.ID = vID
+        return vert1, vel1, attr1
     mu = (isolevel - val1) / (val2 - val1)
     xnr = vert1.x + mu * (vert2.x - vert1.x)
     ynr = vert1.y + mu * (vert2.y - vert1.y)
@@ -246,6 +254,7 @@ def VertexInterp(isolevel, vert1, vert2, val1, val2, vel1, vel2, attr1, attr2):
         isal = 999.98999023
         ic = 999.98999023
     point = Vector(xnew, ynew, znew)
+    #point.ID = vID
     vel_vec = Vector(iu, iv, iw)
     # output.write(point,vel_vec,"\n")
     return Interp(xnew, ynew, znew, iu, iv, iw, it, isal, ic)
