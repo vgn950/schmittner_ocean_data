@@ -40,7 +40,8 @@ class Point:  # VN:associate attr values with ID
 
 
 class Interp:
-    def __init__(self, x, y, z, iu, iv, iw, it, isal, ic):
+    def __init__(self, vID, x, y, z, iu, iv, iw, it, isal, ic):
+        self.ID = vID
         self.p = Vector(x, y, z)
         self.v = Vector(iu, iv, iw)
         self.a = Vector(it, isal, ic)
@@ -52,21 +53,24 @@ class Interp:
 class Triangle:  # struct TRIANGLE
     def __init__(self, v1, v2, v3):
         self.p = [v1, v2, v3]
+        self.ID1 = v1.ID
+        self.ID2 = v2.ID
+        self.ID3 = v3.ID
         self.p1 = v1
         self.p2 = v2
         self.p3 = v3
 
-    #  self.v = [v1, v2, v3]
     # VN: Change to PLY format
     # return triangle as an ascii STL facet
     def __str__(self):
         return """facet normal 0 0 0
+%s %s %s
 outer loop
 vertex %s
 vertex %s
 vertex %s
 endloop
-endfacet""" % (self.p1, self.p2, self.p3)
+endfacet""" % (self.ID1, self.ID2, self.ID3, self.p1, self.p2, self.p3)
 
 
 # """%s
@@ -101,6 +105,7 @@ def main():
         triangles.extend(PolygoniseTri(isolevel, sID[f1], sID[f2], sID[f3], sID[f4]))  # Repeat for each tetrahedron
 
     export_triangles(triangles)
+
 
 
 def export_triangles(triangles):  # stl format; VN: not anymore
@@ -188,7 +193,7 @@ trianglefs = {7: t0708, 8: t0708, 9: t0906, 6: t0906, 10: t0A05, 5: t0A05, 11: t
               13: t0D02, 2: t0D02, 14: t0E01, 1: t0E01, 0: t000F, 15: t000F}
 
 
-def PolygoniseTri(iso, f0, f1, f2, f3):  # VN:Pass values at each vertex instead?
+def PolygoniseTri(iso, f0, f1, f2, f3):
     triangles = []
 
     #   Determine which of the 16 cases we have given which vertices
@@ -197,13 +202,13 @@ def PolygoniseTri(iso, f0, f1, f2, f3):  # VN:Pass values at each vertex instead
     b1 = f1.a1
     b2 = f2.a1
     b3 = f3.a1
-    # print b0,b1,b2,b3
+
     triindex = 0;
     if b0 < iso: triindex |= 1
     if b1 < iso: triindex |= 2
     if b2 < iso: triindex |= 4
     if b3 < iso: triindex |= 8
-    return trianglefs[triindex](iso, f0, f1, f2, f3)  # VN:Return values at each vertex instead?
+    return trianglefs[triindex](iso, f0, f1, f2, f3)
 
 
 # VN:Don't include missing values!
@@ -212,7 +217,7 @@ from math import sqrt
 
 
 def VertexInterp(isolevel, f1, f2): # val1, val2, vel1, vel2, attr1, attr2):
-    #vID = vID + 1
+    Vector.vID = Vector.vID + 1
     tolerance = 0.00001
     vert1 = f1.p
     vert2 = f2.p
@@ -223,13 +228,13 @@ def VertexInterp(isolevel, f1, f2): # val1, val2, vel1, vel2, attr1, attr2):
     val1 = f1.a1
     val2 = f2.a1
     if abs(isolevel - val1) < tolerance:
-        #vert1.ID = vID
+        vert1.vID = Vector.vID
         return vert1, vel1, attr1
     if abs(isolevel - val2) < tolerance:
-        #vert2.ID = vID
+        vert2.vID = Vector.vID
         return vert2, vel2, attr2
     if abs(val1 - val2) < tolerance:
-        #vert1.ID = vID
+        vert1.vID = Vector.vID
         return vert1, vel1, attr1
     mu = (isolevel - val1) / (val2 - val1)
     xnr = vert1.x + mu * (vert2.x - vert1.x)
@@ -255,10 +260,10 @@ def VertexInterp(isolevel, f1, f2): # val1, val2, vel1, vel2, attr1, attr2):
         isal = 999.98999023
         ic = 999.98999023
     point = Vector(xnew, ynew, znew)
-    #point.ID = vID
+    point.vID = Vector.vID
     vel_vec = Vector(iu, iv, iw)
     # output.write(point,vel_vec,"\n")
-    return Interp(xnew, ynew, znew, iu, iv, iw, it, isal, ic)
+    return Interp(point.vID, xnew, ynew, znew, iu, iv, iw, it, isal, ic)
 
 
 if __name__ == "__main__":
