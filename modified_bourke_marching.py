@@ -12,6 +12,7 @@
 # VN:Also take Face List file - tetrahedrons, 4 vertex IDs
 
 class Vector:  # struct XYZ
+    vID = 0
     def __init__(self, x, y, z):
         self.x = x
         self.y = y
@@ -248,7 +249,7 @@ def VertexInterp(isolevel, f1, f2): # val1, val2, vel1, vel2, attr1, attr2):
     it = attr1.x + (attr2.x - attr1.x) * weight
     isal = attr1.y + (attr2.y - attr1.y) * weight
     ic = attr1.z + (attr2.z - attr1.z) * weight
-    if iu >= 999:
+    if iu >= 999: #VN: Make sure missing values stay missing (missing data flag is 999)
         iw = 999.98999023
         it = 999.98999023
         isal = 999.98999023
