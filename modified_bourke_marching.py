@@ -71,9 +71,6 @@ def main():
  import os
  import sys
 
-#VN:Replace these with our data and isovalue
-#VN:Need to replace lobes and readdata
-# data = readdata(lobes,1,41)
  ID = 1
  triangles=[]
  isolevel = float(sys.argv[1])
@@ -86,8 +83,7 @@ def main():
 #vert[ID] = Vector(float(items[0]),float(items[1]),float(items[2]))
      sID[ID] = Point(float(items[0]),float(items[1]),float(items[2]),density,float(items[4]),float(items[5]),float(items[6]),float(items[7]),float(items[8]),float(items[9]))
      ID  = ID + 1 #Range from 1 to 190000
-# print sID[1].a1,sID[1].y
-# print ID
+
  for line in open("clean_sphere_delaunay_tetras.dat"):
       verts = line.split()
       f1 = int(verts[0])
