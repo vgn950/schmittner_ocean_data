@@ -63,14 +63,10 @@ class Triangle:  # struct TRIANGLE
     # VN: Change to PLY format
     # return triangle as an ascii STL facet
     def __str__(self):
-        return """facet normal 0 0 0
-%s %s %s
-outer loop
-vertex %s
-vertex %s
-vertex %s
-endloop
-endfacet""" % (self.ID1, self.ID2, self.ID3, self.p1, self.p2, self.p3)
+        return """%s %s %s
+%s
+%s
+%s """ % (self.ID1, self.ID2, self.ID3, self.p1, self.p2, self.p3)
 
 
 # """%s
@@ -101,7 +97,6 @@ def main():
         f3 = int(verts[2])
         f4 = int(verts[3])
 
-        #     print sID[f1].a1
         triangles.extend(PolygoniseTri(isolevel, sID[f1], sID[f2], sID[f3], sID[f4]))  # Repeat for each tetrahedron
 
     export_triangles(triangles)
@@ -109,10 +104,10 @@ def main():
 
 
 def export_triangles(triangles):  # stl format; VN: not anymore
-    print("solid points")
+  #  print("solid points")
     for tri in triangles:
         print(tri)
-    print("endsolid points")
+   # print("endsolid points")
 
 
 def t000F(iso, f0, f1, f2, f3):
