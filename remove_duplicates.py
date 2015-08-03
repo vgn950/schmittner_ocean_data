@@ -21,20 +21,40 @@ for j in range(ntri): #Create matrix of the triangle list - tested
     tl = tlines[j].split()
     for k in range(3):
         tri[j][k] = int(tl[k])
+s = 0
+for v in vlines:
+    if s > 5: break
 
-for m in range(len(vlines)):
-    vlines = verts
-    for n in range(len(verts)):
-        if (vlines[m] == verts[n] and n > m):#Finds duplicate vertex
-            del verts[n]#Delete duplicate vertex
+    coo = v.split()
+    vx = float(coo[0])
+    vy = float(coo[1])
+    vz = float(coo[2])
+    for vert in verts:
+        ver = vert.split()
+        vertx = float(ver[0])
+        verty = float(ver[1])
+        vertz = float(ver[2])
+        if (vertx == vx and verty == vy and vertz == vz and verts.index(vert) > vlines.index(v)):#Finds duplicate vertex
+            print vx,vertx
+            n = verts.index(vert)
+            m = vlines.index(v)
+            print m,n
+            del verts[n] #Delete duplicate vertex
+            s = s+1
+            print s
             for i in range(ntri):#Fix tri IDs
                 for j in range(3):
                     if tri[i][j] > (n+1):#Account for removed vert from list
                         tri[i][j] = tri[i][j] - 1
                     elif tri[i][j] == (n+1):#Replace w/ new ID
-                        tri[i][j] = m
+                        tri[i][j] = m+1
 
-triout = open("mb_clean_tri_all_27_6.dat",'w')
-triout.write(tri)
 vertout = open("mb_clean_verts_all_27_6.dat",'w')
-vertout.write(verts)
+for vert in verts:
+    vertout.write(vert)
+triout = open("mb_clean_tri_all_27_6.dat",'w')
+for t in tri:
+    for i in range(3):
+        triout.write(str(t[i])+" ")
+    triout.write("\n")
+
