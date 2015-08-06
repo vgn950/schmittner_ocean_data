@@ -63,22 +63,26 @@ class Triangle:  # struct TRIANGLE
     # VN: Change to PLY format
     # return triangle as an ascii STL facet
     def __str__(self):
-        return """%s %s %s
-%s
-%s
-%s """ % (self.ID1, self.ID2, self.ID3, self.p1, self.p2, self.p3)
+        return"""facet normal 0 0 0
+outer loop
+vertex %s
+vertex %s
+vertex %s
+endloop
+endfacet"""%(self.p[0],self.p[1],self.p[2])
 
-
-# """%s
-# %s
-# %s""" %(self.p1,self.p2,self.p3)
+        #"""%s %s %s
+#%s
+#%s
+#%s""" % (self.ID1, self.ID2, self.ID3, self.p1, self.p2, self.p3)
 
 def main():
     import sys
     #vID = 0
     ID = 1
     triangles = []
-    isolevel = 27.6 #float(sys.argv[1])
+    #isostr = sys.argv[1]
+    isolevel = 27.6 #float(isostr)
     # vert = [None]*190001
     sID = [None] * 190001
     for line in open("mb_sphere_sig_all.xyz"):  # MESH AND ATTR FILE
@@ -104,10 +108,11 @@ def main():
 
 
 def export_triangles(triangles):  # stl format; VN: not anymore
-  #  print("solid points")
+    print("solid points")
+    #output = ("mb_all_newline_27_6.dat",'w')
     for tri in triangles:
-        print(tri)
-   # print("endsolid points")
+        print tri
+    print("endsolid points")
 
 
 def t000F(iso, f0, f1, f2, f3):
